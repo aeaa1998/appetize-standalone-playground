@@ -59,22 +59,26 @@ const devices = {
     {
       name: 'iPhone 12',
       identifier: 'iphone12',
-      os: '14.5,15.5,16.2,17.2'.split(',')
+      os: '14.5,15.5,16.2,17.2'.split(','),
+      defaultOs: '16.2'
     },
     {
       name: 'iPhone 11 Pro',
       identifier: 'iphone11pro',
-      os: '14.5,15.5,16.2,17.2'.split(',')
+      os: '14.5,15.5,16.2,17.2'.split(','),
+      defaultOs: '16.2'
     },
     {
       name: 'iPhone 8 Plus',
       identifier: 'iphone8plus',
-      os: '14.5,15.5,16.2'.split(',')
+      os: '14.5,15.5,16.2'.split(','),
+      defaultOs: '16.2'
     },
     {
       name: 'iPhone 8',
       identifier: 'iphone8',
-      os: '14.5,15.5,16.2'.split(',')
+      os: '14.5,15.5,16.2'.split(','),
+      defaultOs: '16.2'
     }
   ]
 }
