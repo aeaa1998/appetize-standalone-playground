@@ -15,7 +15,7 @@
           <div class="space-x-2">
             <v-button
               @click="launchSession"
-              :disabled="!isValid || processState.loading"
+              :disabled="!isValid"
               class="w-full md:w-fit min-w-60"
             >
             Start session
@@ -48,16 +48,6 @@ const sessionConfig = {
   scale: 'auto',
 }
 
-const processState = reactive({
-  loading: false,
-  clear: () => {
-    processState.loading = false
-  },
-  setLoading: () => {
-    processState.loading = true
-  }
-})
-
 // The state containing all the properties for the playground form
 const playgroundForm = reactive({
   publicKey: initialPublicKey == 'standalone' ? '' : initialPublicKey,
@@ -73,7 +63,7 @@ const notification = useNotification()
 const { downloadFileFromBase64 } = useFiles()
 
 // Consuming the composition we have the business logic and state to only be consumed and reduce the overhead of logic
-const { appetize, onScreenshotTaken, appetizeControls, onSessionEnded } =
+const { appetize, onScreenshotTaken, appetizeControls } =
   useAppetizeClientFromId(standaloneSampleId, initialApplication, sessionConfig)
 
 // Helper to see if it's empty or null
@@ -84,7 +74,6 @@ const isValid = computed(() => isNotEmptyorNull(playgroundForm.publicKey))
 
 // Start the flow programatically
 const launchSession = async () => {
-  processState.setLoading()
   // If there is a session lets clean it first
   await appetize.client.startSession({
     publicKey: playgroundForm.publicKey
@@ -92,7 +81,6 @@ const launchSession = async () => {
 }
 
 onMounted(() => {
-
   // Sets a listener whenever a ss was taken
   onScreenshotTaken(async (data) => {
     // Show notification ss was taken
@@ -104,11 +92,6 @@ onMounted(() => {
         .replace(/ /g, '_');
     downloadFileFromBase64(filename, data)
     
-  })
-
-  // Register when the session has ended
-  onSessionEnded(async () => {
-    processState.clear()
   })
 })
 </script>
